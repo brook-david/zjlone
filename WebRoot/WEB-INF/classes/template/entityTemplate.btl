@@ -1,0 +1,50 @@
+package ${package};
+import org.beetl.sql.core.TailBean;
+import org.beetl.sql.core.annotatoin.AssignID;
+${imports}
+/*
+* ${comment}
+* gen by beetlsql ${date(),"yyyy-MM-dd"}
+*/
+public class ${className} ${!isEmpty(ext)?"extends "+ext} {
+	
+	@for(attr in attrs){
+	private ${attr.type} ${attr.name};	${!isEmpty(attr.comment)?"//"+attr.comment}
+	@}
+	
+	@for(attr in attrs){
+	@if(!isEmpty(attr.comment)){
+	/**${attr.comment}
+	*\@return 
+	*/
+	@}	
+	${attrLP.first?'@AssignID("uuid")':""}
+	public ${attr.type} get${attr.methodName}(){
+		return  ${attr.name};
+	}
+	@if(!isEmpty(attr.comment)){
+	/**${attr.comment}
+	*\@param  ${attr.name}
+	*/
+	@}
+	public void set${attr.methodName}(${attr.type} ${attr.name} ){
+		this.${attr.name} = ${attr.name};
+	}
+	
+	@}
+
+	\@Override
+	public String toString(){
+		StringBuilder sb = new StringBuilder();
+		@for(attr in attrs){
+		sb.append(${attr.name}${attrLP.last?'':'+","'});
+		@}
+		@if(!isEmpty(ext)){
+		if(!this.getTails().isEmpty()){
+			sb.append(this.getTails().toString());
+		}
+		@}
+		return sb.toString();
+	}
+
+}

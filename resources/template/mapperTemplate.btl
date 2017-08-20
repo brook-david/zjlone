@@ -1,0 +1,41 @@
+queryByParams
+===
+* 注释
+
+    select #use("cols")# from ${table} where #use("condition")#
+    
+updateNoNullById
+===
+	update ${table} set #use("updateCols")# where ${cols[0]} = #${NC(cols[0])}#
+	
+deleteById
+===
+	delete from ${table} where ${cols[0]} = #${NC(cols[0])}#
+
+cols
+===
+    @for(col in cols){
+    ${col}${colLP.last?"":","}
+    @}
+
+updateCols
+===
+    \@trim(){
+    @for(col in cols){
+    @if(!colLP.first){
+    \@if(!isEmpty(${NC(col)})){
+    ${col}=#${NC(col)}#,
+    \@}
+    @}
+    @}
+    \@}
+
+condition
+===
+
+    1 = 1
+    @for(col in cols){
+    \@if(!isEmpty(${NC(col)})){
+     and ${col}=#${NC(col)}#
+    \@}
+    @}

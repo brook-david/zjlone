@@ -1,0 +1,13 @@
+# jdbcUrl = jdbc:mysql://120.26.49.186/jfinal_demo?characterEncoding=utf8&zeroDateTimeBehavior=convertToNull
+jdbcUrl = jdbc:mysql://120.26.49.186:3306/witspal?useUnicode=true&characterEncoding=utf8
+user = root
+password = 123456
+devMode = true
+# beetlsql
+PRODUCT_MODE = true
+CHARSET = UTF-8
+OFFSET_START_ZERO = true
+sql.dbStyle=org.beetl.sql.core.db.MySqlStyle
+sql.nc=org.beetl.sql.core.UnderlinedNameConversion
+sql.root=/sql
+sql.interceptor=org.beetl.sql.ext.DebugInterceptor
