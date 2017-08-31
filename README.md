@@ -10,4 +10,4 @@ app:
 	Jfinal 设为开发者模式
 上线：
 	日志设置为Info。
-	Jfinal 设为线下模式
+	Jfinal 设为线上模式
