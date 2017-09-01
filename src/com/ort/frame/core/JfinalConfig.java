@@ -24,6 +24,7 @@ import com.ort.frame.interceptor.LoginInterceptor;
 import com.ort.frame.interceptor.SignInterceptor;
 import com.ort.frame.routes.AdminRoutes;
 import com.ort.frame.routes.TouristRoutes;
+import com.ort.frame.timer.EhCacheTimer;
 
 /**
  * 本 demo 仅表达最为粗浅的 jfinal 用法，更为有价值的实用的企业级用法
@@ -58,7 +59,7 @@ public class JfinalConfig extends JFinalConfig {
 	public void configConstant(Constants me) {
 		// 加载少量必要配置，随后可用PropKit.get(...)获取值
 		PropKit.use("core-config.txt");
-		me.setDevMode(PropKit.getBoolean("devMode", false));
+		me.setDevMode(PropKit.getBoolean("devMode", true));
 		me.setReportAfterInvocation(false);
 		
 		JFinal3BeetlRenderFactory rf = new JFinal3BeetlRenderFactory();
@@ -102,6 +103,7 @@ public class JfinalConfig extends JFinalConfig {
 	public void configPlugin(Plugins me) {
 		// 缓存插件
 		me.add(new EhCachePlugin());
+		EhCacheTimer.init(30000);	//cache缓存定时器
 		
 		JFinalBeetlSql.init(createDruidDataSource(),new DataSource[0]);
 		JFinalBeetlSql.dao().addIdAutonGen("uuid", new IDAutoGen(){ 	//注册生成ID

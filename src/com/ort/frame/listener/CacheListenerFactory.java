@@ -10,7 +10,6 @@ import net.sf.ehcache.event.CacheEventListenerFactory;
 public class CacheListenerFactory extends CacheEventListenerFactory {
 	@Override  
 	public CacheEventListener createCacheEventListener(Properties properties) {  
-	   EhCacheTimer.init(30000);	//定时器
 	   return new MemberCacheListener();  
 	}  
 }  
