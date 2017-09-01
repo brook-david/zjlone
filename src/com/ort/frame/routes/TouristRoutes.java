@@ -6,7 +6,7 @@ import org.slf4j.LoggerFactory;
 import com.jfinal.config.Routes;
 import com.ort.controller.AssistController;
 import com.ort.controller.BlogController;
-import com.ort.controller.TouristController;
+import com.ort.controller.door.IndexController;
 
 /**
  * 所有用户（包括游客）可访问的地址
@@ -20,8 +20,9 @@ public class TouristRoutes  extends Routes {
 	@Override
 	public void config() {
 		this.add("/assist", AssistController.class);
-		this.add("/tourist", TouristController.class);
+//		this.add("/tourist", TouristController.class);
 		this.add("/blog", BlogController.class);
+		this.add("/index", IndexController.class);
 		log.debug("TouristRoutes 加载完成");
 	}
 

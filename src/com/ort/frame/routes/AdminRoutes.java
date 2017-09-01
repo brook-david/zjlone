@@ -4,9 +4,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.jfinal.config.Routes;
-import com.ort.controller.AssistController;
-import com.ort.controller.BlogController;
-import com.ort.controller.MemberController;
 
 /**
  * 登录用户可访问的地址
@@ -19,7 +16,7 @@ public class AdminRoutes extends Routes {
 	
 	@Override
 	public void config() {
-		add("/member",MemberController.class);
+//		add("/member",MemberController.class);
 		log.debug("AdminRoutes 加载完成");
 	}
 

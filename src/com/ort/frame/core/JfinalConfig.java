@@ -4,6 +4,8 @@ import java.util.UUID;
 
 import javax.sql.DataSource;
 
+import org.beetl.core.GroupTemplate;
+import org.beetl.ext.jfinal3.JFinal3BeetlRenderFactory;
 import org.beetl.sql.core.IDAutoGen;
 import org.beetl.sql.ext.jfinal.JFinalBeetlSql;
 
@@ -14,8 +16,8 @@ import com.jfinal.config.Interceptors;
 import com.jfinal.config.JFinalConfig;
 import com.jfinal.config.Plugins;
 import com.jfinal.config.Routes;
+import com.jfinal.core.JFinal;
 import com.jfinal.kit.PropKit;
-import com.jfinal.plugin.activerecord.ActiveRecordPlugin;
 import com.jfinal.plugin.ehcache.EhCachePlugin;
 import com.jfinal.template.Engine;
 import com.ort.frame.interceptor.LoginInterceptor;
@@ -42,7 +44,7 @@ public class JfinalConfig extends JFinalConfig {
 		/**
 		 * 特别注意：Eclipse 之下建议的启动方式
 		 */
-		//JFinal.start("WebRoot", 80, "/", 5);
+		JFinal.start("WebRoot", 80, "/", 5);
 
 		/**
 		 * 特别注意：IDEA 之下建议的启动方式，仅比 eclipse 之下少了最后一个参数
@@ -58,6 +60,13 @@ public class JfinalConfig extends JFinalConfig {
 		PropKit.use("core-config.txt");
 		me.setDevMode(PropKit.getBoolean("devMode", false));
 		me.setReportAfterInvocation(false);
+		
+		JFinal3BeetlRenderFactory rf = new JFinal3BeetlRenderFactory();
+		rf.config();
+		me.setRenderFactory(rf);
+		
+		GroupTemplate gt = rf.groupTemplate;
+		//根据gt可以添加扩展函数，格式化函数，共享变量等，
 	}
 	
 	/**
@@ -78,9 +87,12 @@ public class JfinalConfig extends JFinalConfig {
 	
 	public static DruidDataSource createDruidDataSource() {
 		DruidDataSource dds = new DruidDataSource();
-		dds.setUrl(PropKit.get("jdbcUrl"));
+		dds.setDriverClassName("org.sqlite.JDBC");	//sqlite连接
+		dds.setUrl(PropKit.get("jdbcUrl.sqlite"));
+		
+		/*dds.setUrl(PropKit.get("jdbcUrl"));	//mysql连接
 		dds.setUsername(PropKit.get("user"));
-		dds.setPassword(PropKit.get("password").trim());
+		dds.setPassword(PropKit.get("password").trim());*/
 		return dds;
 	}
 	
@@ -95,7 +107,8 @@ public class JfinalConfig extends JFinalConfig {
 		JFinalBeetlSql.dao().addIdAutonGen("uuid", new IDAutoGen(){ 	//注册生成ID
 			@Override
 			public Object nextID(String params) {
-				return UUID.randomUUID().toString().replaceAll("-", "").toUpperCase();
+				String uuid = UUID.randomUUID().toString().replaceAll("-", "").toUpperCase();
+				return uuid;
 			}
 		});
 	}

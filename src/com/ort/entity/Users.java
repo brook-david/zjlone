@@ -7,44 +7,38 @@ import java.sql.Timestamp;
 
 /*
 * 
-* gen by beetlsql 2017-04-24
+* gen by beetlsql 2017-08-31
 */
 public class Users extends TailBean {
 	
-	private Integer id;	
-	private String username;	
-	private Integer status;	//0未激活   1激活   2注销
+	private String id;	
+	private Integer status;	
+	private String createTime;	
 	private String password;	
-	private Date createTime;	
+	private String username;	
 	
 	@AssignID("uuid")
-	public Integer getId(){
+	public String getId(){
 		return  id;
 	}
-	public void setId(Integer id ){
+	public void setId(String id ){
 		this.id = id;
 	}
 	
 	
-	public String getUsername(){
-		return  username;
-	}
-	public void setUsername(String username ){
-		this.username = username;
-	}
-	
-	/**0未激活   1激活   2注销
-	*@return 
-	*/
-	
 	public Integer getStatus(){
 		return  status;
 	}
-	/**0未激活   1激活   2注销
-	*@param  status
-	*/
 	public void setStatus(Integer status ){
 		this.status = status;
+	}
+	
+	
+	public String getCreateTime(){
+		return  createTime;
+	}
+	public void setCreateTime(String createTime ){
+		this.createTime = createTime;
 	}
 	
 	
@@ -56,11 +50,11 @@ public class Users extends TailBean {
 	}
 	
 	
-	public Date getCreateTime(){
-		return  createTime;
+	public String getUsername(){
+		return  username;
 	}
-	public void setCreateTime(Date createTime ){
-		this.createTime = createTime;
+	public void setUsername(String username ){
+		this.username = username;
 	}
 	
 
@@ -68,10 +62,10 @@ public class Users extends TailBean {
 	public String toString(){
 		StringBuilder sb = new StringBuilder();
 		sb.append(id+",");
-		sb.append(username+",");
 		sb.append(status+",");
+		sb.append(createTime+",");
 		sb.append(password+",");
-		sb.append(createTime);
+		sb.append(username);
 		if(!this.getTails().isEmpty()){
 			sb.append(this.getTails().toString());
 		}

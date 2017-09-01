@@ -7,45 +7,45 @@ import java.sql.Timestamp;
 
 /*
 * 
-* gen by beetlsql 2017-04-24
+* gen by beetlsql 2017-08-31
 */
 public class UserRoles extends TailBean {
 	
-	private Integer roleId;	
-	private Integer userId;	
-	private Date createTime;	
+	private String createTime;	
+	private String roleId;	
+	private String userId;	
 	
 	@AssignID("uuid")
-	public Integer getRoleId(){
+	public String getCreateTime(){
+		return  createTime;
+	}
+	public void setCreateTime(String createTime ){
+		this.createTime = createTime;
+	}
+	
+	
+	public String getRoleId(){
 		return  roleId;
 	}
-	public void setRoleId(Integer roleId ){
+	public void setRoleId(String roleId ){
 		this.roleId = roleId;
 	}
 	
 	
-	public Integer getUserId(){
+	public String getUserId(){
 		return  userId;
 	}
-	public void setUserId(Integer userId ){
+	public void setUserId(String userId ){
 		this.userId = userId;
-	}
-	
-	
-	public Date getCreateTime(){
-		return  createTime;
-	}
-	public void setCreateTime(Date createTime ){
-		this.createTime = createTime;
 	}
 	
 
 	@Override
 	public String toString(){
 		StringBuilder sb = new StringBuilder();
+		sb.append(createTime+",");
 		sb.append(roleId+",");
-		sb.append(userId+",");
-		sb.append(createTime);
+		sb.append(userId);
 		if(!this.getTails().isEmpty()){
 			sb.append(this.getTails().toString());
 		}

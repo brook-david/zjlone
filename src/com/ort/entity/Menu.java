@@ -7,7 +7,7 @@ import java.sql.Timestamp;
 
 /*
 * 
-* gen by beetlsql 2017-04-24
+* gen by beetlsql 2017-08-31
 */
 public class Menu extends TailBean {
 	

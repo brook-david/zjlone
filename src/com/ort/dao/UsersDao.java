@@ -8,7 +8,7 @@ import com.ort.entity.*;
 
 /*
 * 
-* gen by beetlsql mapper 2017-04-24
+* gen by beetlsql mapper 2017-08-31
 */
 public interface UsersDao extends BaseMapper<Users> {
 

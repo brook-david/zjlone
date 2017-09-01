@@ -6,7 +6,7 @@ import com.ort.frame.util.BeetlUtil;
 public class MyController extends Controller {
 
 	/**
-	 * 生成实体类
+	 * 根据param生成实体类
 	 * @param classN
 	 * @return
 	 */

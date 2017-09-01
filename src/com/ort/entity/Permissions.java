@@ -7,21 +7,29 @@ import java.sql.Timestamp;
 
 /*
 * 
-* gen by beetlsql 2017-04-24
+* gen by beetlsql 2017-08-31
 */
 public class Permissions extends TailBean {
 	
-	private Integer id;	
+	private String id;	
+	private String createTime;	
 	private String description;	
 	private String permission;	
-	private Date createTime;	
 	
 	@AssignID("uuid")
-	public Integer getId(){
+	public String getId(){
 		return  id;
 	}
-	public void setId(Integer id ){
+	public void setId(String id ){
 		this.id = id;
+	}
+	
+	
+	public String getCreateTime(){
+		return  createTime;
+	}
+	public void setCreateTime(String createTime ){
+		this.createTime = createTime;
 	}
 	
 	
@@ -40,22 +48,14 @@ public class Permissions extends TailBean {
 		this.permission = permission;
 	}
 	
-	
-	public Date getCreateTime(){
-		return  createTime;
-	}
-	public void setCreateTime(Date createTime ){
-		this.createTime = createTime;
-	}
-	
 
 	@Override
 	public String toString(){
 		StringBuilder sb = new StringBuilder();
 		sb.append(id+",");
+		sb.append(createTime+",");
 		sb.append(description+",");
-		sb.append(permission+",");
-		sb.append(createTime);
+		sb.append(permission);
 		if(!this.getTails().isEmpty()){
 			sb.append(this.getTails().toString());
 		}

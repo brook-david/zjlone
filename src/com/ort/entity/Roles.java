@@ -7,19 +7,19 @@ import java.sql.Timestamp;
 
 /*
 * 
-* gen by beetlsql 2017-04-24
+* gen by beetlsql 2017-08-31
 */
 public class Roles extends TailBean {
 	
-	private Integer id;	
+	private String id;	
 	private String description;	
 	private String roleName;	
 	
 	@AssignID("uuid")
-	public Integer getId(){
+	public String getId(){
 		return  id;
 	}
-	public void setId(Integer id ){
+	public void setId(String id ){
 		this.id = id;
 	}
 	

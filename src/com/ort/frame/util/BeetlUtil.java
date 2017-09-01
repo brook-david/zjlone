@@ -1,16 +1,9 @@
 package com.ort.frame.util;
 
-import java.io.BufferedReader;
-import java.io.File;
 import java.io.FileInputStream;
-import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.lang.reflect.Field;
-import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.Properties;
-import java.util.Scanner;
 import java.util.UUID;
 
 import org.beetl.sql.core.ClasspathLoader;
@@ -21,7 +14,6 @@ import org.beetl.sql.core.Interceptor;
 import org.beetl.sql.core.SQLLoader;
 import org.beetl.sql.core.SQLManager;
 import org.beetl.sql.core.UnderlinedNameConversion;
-import org.beetl.sql.core.db.KeyHolder;
 import org.beetl.sql.core.db.MySqlStyle;
 import org.beetl.sql.core.kit.StringKit;
 import org.beetl.sql.ext.DebugInterceptor;
@@ -29,14 +21,6 @@ import org.beetl.sql.ext.gen.GenConfig;
 import org.beetl.sql.ext.gen.SourceGen;
 import org.beetl.sql.ext.jfinal.JFinalBeetlSql;
 
-import com.jfinal.core.Controller;
-import com.ort.dao.MenuDao;
-import com.ort.dao.TMemberAttentionDao;
-import com.ort.dao.TMemberDao;
-import com.ort.entity.Menu;
-import com.ort.entity.TMember;
-import com.ort.entity.TMemberAttention;
-import com.ort.frame.util.beetl.MySourceGen;
 import com.ort.frame.util.beetl.SqlDaoGen;
 import com.ort.frame.util.beetl.SqlMapperGen;
 import com.ort.frame.util.beetl.UnderlinedNameConversionFn;
@@ -55,12 +39,7 @@ public class BeetlUtil {
 	private static String[] strs;
 	
 	static{
-		String[] param = {"menu","permissions","roles","roles_permissions","t_agency","t_brand",
-				"t_family","t_family_apply_record","t_family_member_relation","t_intelligent_pen",
-				"t_intelligent_pen_constant","t_intelligent_stock","t_leave_message_manage","t_mast_val",
-				"t_master","t_member","t_member_attention","t_member_audit_log","t_member_pen_ag",
-				"t_member_pen_relation","t_opi_feedback_manage","t_production_model","t_return_pen_record",
-				"t_sales","t_sales_return","user_roles","users"};
+		String[] param = {"menu","permissions","roles","roles_permissions","user_roles","users"};
 //		param = new String[]{"menu"};
 		strs = param;
 	}
@@ -87,9 +66,14 @@ public class BeetlUtil {
 			) throws Exception{
 		Properties prop = new Properties();
 		prop.load(new FileInputStream(BeetlUtil.class.getResource(dbConfig).getFile()));
+//		ConnectionSource cs = ConnectionSourceHelper.getSimple(
+//				prop.getProperty("dirver", "com.mysql.jdbc.Driver"), 
+//				prop.getProperty("jdbcUrl"), 
+//				prop.getProperty("user"), 
+//				prop.getProperty("password"));
 		ConnectionSource cs = ConnectionSourceHelper.getSimple(
-				prop.getProperty("dirver", "com.mysql.jdbc.Driver"), 
-				prop.getProperty("jdbcUrl"), 
+				prop.getProperty("dirver", "org.sqlite.JDBC"), 
+				prop.getProperty("jdbcUrl.sqlite"), 
 				prop.getProperty("user"), 
 				prop.getProperty("password"));
 		SQLManager sqlManager = new SQLManager(new MySqlStyle(),SqlLocation,cs,new UnderlinedNameConversion(),new Interceptor[]{new DebugInterceptor()});
@@ -99,37 +83,13 @@ public class BeetlUtil {
 				return UUID.randomUUID().toString().replaceAll("-", "").toUpperCase();
 			}
 		});
-//		gen(sqlManager,table,entityLocation);
+		gen(sqlManager,table,entityLocation);
 		
-		query(sqlManager);
+		//query(sqlManager);
 //		insert(sqlManager);
 //		delete(sqlManager);
 	}
 	
-	private static void query(SQLManager sqlm){
-		TMember param = new TMember();
-		param.setAccount("aaaaa1");
-		param.setMemberId("adawd1");
-		List<TMember> lm = sqlm.getMapper(TMemberDao.class).queryByParams(param);
-		Menu TMemberAttention = new Menu();
-		TMemberAttention.setFid("fwefwe");
-		sqlm.getMapper(MenuDao.class).queryByParams(TMemberAttention);
-		System.out.println(lm);
-	}
-	
-	private static void insert(SQLManager sqlm){
-		TMember param = new TMember();
-		param.setAccount("aaaaa1");
-		param.setMemberId("adawd2");
-		KeyHolder kh = new KeyHolder();
-		int lm = sqlm.insertTemplate(param);
-		System.out.println(lm+":"+kh.getKey()+":"+param.getMemberId());
-	}
-	
-	private static void delete(SQLManager sqlm){
-		int lm = sqlm.deleteById(TMember.class, "090812FF797843189A7DCDE0999AF56E");
-		System.out.println(lm);
-	}
 	
 	private static void gen(SQLManager sqlManager,String table,String entityLocation) throws Exception{
 		
